@@ -106,7 +106,7 @@ func TestDownloadStop(t *testing.T) {
 }
 
 func TestMeasure(t *testing.T) {
-	KbpsChan := make(chan float64)
+	KbpsChan := make(chan float32)
 
 	spinner := spin.New("")
 

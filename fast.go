@@ -229,7 +229,7 @@ loop:
 	return
 }
 
-func (f *Fast) Measure(urls []string, KbpsChan chan<- float64) (err error) {
+func (f *Fast) Measure(urls []string, KbpsChan chan<- float32) (err error) {
 	debug()
 
 	done := make(chan struct{})
@@ -290,8 +290,8 @@ func (f *Fast) Measure(urls []string, KbpsChan chan<- float64) (err error) {
 	}()
 
 	// measure per second
-	var secondPass float64 = 0 // should be int but to save time convert
-	var avgKbps float64 = 0
+	var secondPass float32 = 0 // should be int but to save time convert
+	var avgKbps float32 = 0
 
 	go func() {
 	loop:
@@ -309,7 +309,7 @@ func (f *Fast) Measure(urls []string, KbpsChan chan<- float64) (err error) {
 
 			default:
 				muxByteLen.Lock()
-				avgKbps = float64(byteLen) / secondPass
+				avgKbps = float32(byteLen) / secondPass
 				muxByteLen.Unlock()
 
 				KbpsChan <- avgKbps * 8 / 1000
